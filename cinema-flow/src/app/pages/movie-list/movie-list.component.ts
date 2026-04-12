@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { Observable, combineLatest, map } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie';
+import { RatingLevelPipe } from '../../pipes/rating-level.pipe';
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule /* Material */],
+  imports: [CommonModule, RouterLink, FormsModule, RatingLevelPipe /* Material */],
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.scss'
 })

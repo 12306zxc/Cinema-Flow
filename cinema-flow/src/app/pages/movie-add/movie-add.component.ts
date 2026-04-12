@@ -60,7 +60,8 @@ export class MovieAddComponent {
       description: this.movieForm.description,
       actors: this.movieForm.actors,
       duration: this.movieForm.duration,
-      tags: this.movieForm.tags ? this.movieForm.tags.split(',').map(tag => tag.trim()) : []
+      tags: this.movieForm.tags ? this.movieForm.tags.split(',').map(tag => tag.trim()) : [],
+      status: 'showing'
     };
 
     // 调用服务添加电影

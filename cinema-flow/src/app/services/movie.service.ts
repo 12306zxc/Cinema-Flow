@@ -71,6 +71,7 @@ export class MovieService {
     this.movies = [
       {
         id: 1,
+        status: 'showing',
         title: '星际穿越',
         releaseDate: new Date(2014, 10, 7),
         director: '克里斯托弗·诺兰',
@@ -84,6 +85,7 @@ export class MovieService {
       },
       {
         id: 2,
+        status: 'showing',
         title: '泰坦尼克号',
         releaseDate: new Date(1997, 11, 19),
         director: '詹姆斯·卡梅隆',
@@ -97,6 +99,7 @@ export class MovieService {
       },
       {
         id: 3,
+        status: 'showing',
         title: '盗梦空间',
         releaseDate: new Date(2010, 7, 13),
         director: '克里斯托弗·诺兰',
@@ -110,6 +113,7 @@ export class MovieService {
       },
       {
         id: 4,
+        status: 'showing',
         title: '哪吒之魔童降世',
         releaseDate: new Date(2019, 6, 26),
         director: '饺子',
@@ -123,6 +127,7 @@ export class MovieService {
       },
       {
         id: 5,
+        status: 'showing',
         title: '肖申克的救赎',
         releaseDate: new Date(1994, 9, 14),
         director: '弗兰克·德拉邦特',
@@ -136,6 +141,7 @@ export class MovieService {
       },
       {
         id: 6,
+        status: 'showing',
         title: '流浪地球2',
         releaseDate: new Date(2023, 0, 22),
         director: '郭帆',
@@ -221,12 +227,14 @@ export class MovieService {
       return of(createdMovie).pipe(
         delay(150),
         catchError(error => {
-          this.logger.log(`添加电影失败: ${error.message || error}`);
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          this.logger.log(`添加电影失败: ${errorMessage}`);
           throw error; // 重新抛出错误
         })
       );
     } catch (error) {
-      this.logger.log(`添加电影失败: ${error.message || error}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      this.logger.log(`添加电影失败: ${errorMessage}`);
       return throwError(() => error);
     }
   }
@@ -259,12 +267,14 @@ export class MovieService {
       return of(success).pipe(
         delay(150),
         catchError(error => {
-          this.logger.log(`删除电影失败: ${error.message || error}`);
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          this.logger.log(`删除电影失败: ${errorMessage}`);
           return of(false); // 降级为false
         })
       );
     } catch (error) {
-      this.logger.log(`删除电影失败: ${error.message || error}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      this.logger.log(`删除电影失败: ${errorMessage}`);
       return of(false);
     }
   }
@@ -297,12 +307,14 @@ export class MovieService {
       return of(success).pipe(
         delay(150),
         catchError(error => {
-          this.logger.log(`更新电影失败: ${error.message || error}`);
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          this.logger.log(`更新电影失败: ${errorMessage}`);
           return of(false); // 降级为false
         })
       );
     } catch (error) {
-      this.logger.log(`更新电影失败: ${error.message || error}`);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      this.logger.log(`更新电影失败: ${errorMessage}`);
       return of(false);
     }
   }
