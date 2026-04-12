@@ -1,0 +1,45 @@
+<div class="movie-list-container">
+  <!-- 统计面板 -->
+  <div class="stats-section">
+    <app-movie-stats></app-movie-stats>
+  </div>
+
+  <!-- 新增电影表单 -->
+  <div class="movie-form-section">
+    <app-movie-form></app-movie-form>
+  </div>
+
+  <!-- 电影库区域 -->
+  <div class="movies-section">
+    <h2 class="section-title">电影库</h2>
+    <div class="movie-grid">
+      <!-- 使用 async 管道订阅电影数据 -->
+      <div *ngFor="let movie of movies$ | async" 
+           class="movie-card" 
+           [class.selected]="selectedMovie?.id === movie.id"
+           (click)="onSelect(movie)">
+        <div class="poster-wrapper">
+          <img class="movie-poster" [src]="movie.posterUrl" [alt]="movie.title">
+          <div class="poster-overlay">
+            <div class="play-icon">▶</div>
+          </div>
+          <div class="rating-badge">
+            {{ movie.rating }} <span class="star">⭐</span>
+          </div>
+        </div>
+        <div class="movie-info">
+          <h3 class="movie-title">{{ movie.title }}</h3>
+          <p class="movie-meta">{{ movie.releaseDate | date: 'yyyy' }} · {{ movie.director }}</p>
+          <button mat-button color="warn" class="delete-btn" (click)="onDeleteMovie(movie.id); $event.stopPropagation()">
+            删除
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 电影详情 -->
+  <div *ngIf="selectedMovie" class="movie-detail-section">
+    <app-movie-detail [movie]="selectedMovie"></app-movie-detail>
+  </div>
+</div>

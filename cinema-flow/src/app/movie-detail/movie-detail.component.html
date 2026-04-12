@@ -1,0 +1,94 @@
+<div class="movie-detail-container">
+  <!-- 防御式渲染：确保 movie 存在时才显示内容 -->
+  <div *ngIf="movie" class="movie-detail-card">
+    <div class="movie-detail-header">
+      <h2>{{ movie.title }}</h2>
+      <button mat-button color="primary" (click)="onEdit()" *ngIf="!isEditing">
+        编辑
+      </button>
+    </div>
+
+    <div class="movie-detail-content">
+      <!-- 编辑模式 -->
+      <div *ngIf="isEditing" class="movie-edit-form">
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <input matInput [(ngModel)]="movie.title" placeholder="电影标题">
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <input matInput [(ngModel)]="movie.director" placeholder="导演">
+          </mat-form-field>
+        </div>
+        
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <input matInput [matDatepicker]="picker" [(ngModel)]="movie.releaseDate" placeholder="上映日期">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <input matInput type="number" [(ngModel)]="movie.duration" placeholder="时长（分钟）">
+          </mat-form-field>
+        </div>
+        
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <input matInput type="number" step="0.1" min="0" max="10" [(ngModel)]="movie.rating" placeholder="评分">
+          </mat-form-field>
+          <mat-checkbox [(ngModel)]="movie.isWatched" class="watched-checkbox">
+            已观看
+          </mat-checkbox>
+        </div>
+        
+        <div class="form-row">
+          <mat-form-field class="form-field full-width">
+            <input matInput [(ngModel)]="movie.posterUrl" placeholder="海报 URL">
+          </mat-form-field>
+        </div>
+        
+        <div class="form-row">
+          <mat-form-field class="form-field full-width">
+            <input matInput [(ngModel)]="movie.actors" placeholder="演员">
+          </mat-form-field>
+        </div>
+        
+        <div class="form-row">
+          <mat-form-field class="form-field full-width">
+            <textarea matInput [(ngModel)]="movie.description" placeholder="电影简介" rows="4"></textarea>
+          </mat-form-field>
+        </div>
+        
+        <div class="form-actions">
+          <button mat-button color="primary" (click)="onSave()">
+            保存
+          </button>
+          <button mat-button (click)="onCancel()">
+            取消
+          </button>
+        </div>
+      </div>
+      
+      <!-- 查看模式 -->
+      <div *ngIf="!isEditing" class="movie-info">
+        <div class="movie-poster-large">
+          <img [src]="movie.posterUrl" [alt]="movie.title">
+        </div>
+        
+        <div class="movie-details">
+          <p><strong>导演：</strong>{{ movie.director }}</p>
+          <p><strong>上映日期：</strong>{{ movie.releaseDate | date: 'yyyy年MM月dd日' }}</p>
+          <p><strong>时长：</strong>{{ movie.duration }} 分钟</p>
+          <p><strong>评分：</strong>{{ movie.rating }} ⭐</p>
+          <p><strong>状态：</strong>{{ movie.isWatched ? '已观看' : '未观看' }}</p>
+          <p><strong>演员：</strong>{{ movie.actors }}</p>
+          <p><strong>简介：</strong>{{ movie.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 无电影选中时的提示 -->
+  <div *ngIf="!movie" class="no-movie-selected">
+    <p>请从列表中选择一部电影查看详情</p>
+  </div>
+</div>

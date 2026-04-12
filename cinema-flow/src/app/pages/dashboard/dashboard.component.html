@@ -1,0 +1,69 @@
+<div class="dashboard-container">
+  <!-- 三态展示核心代码：recent$ | async 异步管道 -->
+  <ng-container *ngIf="recent$ | async as movies; else loadingTpl">
+    <!-- 状态1：正常展示数据 -->
+    <ng-container *ngIf="movies.length; else emptyTpl">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-icon">🎬</span>
+            <h3>总电影数</h3>
+          </div>
+          <div class="stat-content">
+            <p class="stat-number">{{ (stats$ | async)?.total || 0 }}</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-icon">📽️</span>
+            <h3>已观影</h3>
+          </div>
+          <div class="stat-content">
+            <p class="stat-number">{{ (stats$ | async)?.watched || 0 }}</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <span class="stat-icon">⭐</span>
+            <h3>平均评分</h3>
+          </div>
+          <div class="stat-content">
+            <p class="stat-number">{{ (stats$ | async)?.avgRating | number:'1.1-1' }}</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>最近添加的电影</h2>
+      <div class="recent-movies">
+        <div *ngFor="let movie of movies" class="movie-card">
+          <div class="movie-card-header">
+            <h3>{{ movie.title }}</h3>
+            <button (click)="deleteMovie(movie.id)" class="delete-btn">
+              删除
+            </button>
+          </div>
+          <div class="movie-card-content">
+            <p>评分: {{ movie.rating }} / 10</p>
+            <p>导演: {{ movie.director }}</p>
+            <p>状态: {{ movie.isWatched ? '已观影' : '未观影' }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- 状态2：空数据模板 -->
+    <ng-template #emptyTpl>
+      <div class="empty-state">
+        <p>暂无电影数据，请添加电影。</p>
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <!-- 状态3：加载中模板 -->
+  <ng-template #loadingTpl>
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>正在加载电影数据...</p>
+    </div>
+  </ng-template>
+</div>

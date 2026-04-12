@@ -1,0 +1,142 @@
+<div class="page-container">
+  <h1>添加新电影</h1>
+  
+  <!-- 错误信息展示 -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div class="movie-form">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">电影名称</label>
+        <input 
+          type="text" 
+          id="title" 
+          [(ngModel)]="movieForm.title" 
+          name="title" 
+          required
+          class="form-input"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="director">导演</label>
+        <input 
+          type="text" 
+          id="director" 
+          [(ngModel)]="movieForm.director" 
+          name="director" 
+          required
+          class="form-input"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="releaseDate">上映日期</label>
+        <input 
+          type="date" 
+          id="releaseDate" 
+          [(ngModel)]="movieForm.releaseDate" 
+          name="releaseDate"
+          class="form-input"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label>评分：{{ movieForm.rating }}</label>
+        <input 
+          type="range" 
+          min="0" 
+          max="10" 
+          step="0.1" 
+          [(ngModel)]="movieForm.rating" 
+          name="rating"
+          class="form-range"
+        >
+      </div>
+      
+      <div class="form-group checkbox-group">
+        <input 
+          type="checkbox" 
+          id="isWatched" 
+          [(ngModel)]="movieForm.isWatched" 
+          name="isWatched"
+        >
+        <label for="isWatched">已观影</label>
+      </div>
+      
+      <div class="form-group">
+        <label for="posterUrl">海报URL</label>
+        <input 
+          type="text" 
+          id="posterUrl" 
+          [(ngModel)]="movieForm.posterUrl" 
+          name="posterUrl"
+          class="form-input"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="description">电影简介</label>
+        <textarea 
+          id="description" 
+          [(ngModel)]="movieForm.description" 
+          name="description"
+          rows="3"
+          class="form-textarea"
+        ></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="actors">主演</label>
+        <input 
+          type="text" 
+          id="actors" 
+          [(ngModel)]="movieForm.actors" 
+          name="actors"
+          placeholder="用逗号分隔"
+          class="form-input"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="duration">时长（分钟）</label>
+        <input 
+          type="number" 
+          id="duration" 
+          [(ngModel)]="movieForm.duration" 
+          name="duration"
+          min="0"
+          class="form-input"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="tags">标签</label>
+        <input 
+          type="text" 
+          id="tags" 
+          [(ngModel)]="movieForm.tags" 
+          name="tags"
+          placeholder="用逗号分隔"
+          class="form-input"
+        >
+      </div>
+      
+      <div class="form-actions">
+        <a routerLink="/movies" class="btn btn-secondary">
+          取消
+        </a>
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [disabled]="isLoading || !movieForm.title || !movieForm.director"
+        >
+          <span *ngIf="isLoading">添加中...</span>
+          <span *ngIf="!isLoading">保存</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

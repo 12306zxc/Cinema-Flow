@@ -1,0 +1,29 @@
+
+// 引入Angular Material核心样式
+@use '@angular/material' as mat;
+
+// 定义深色主题的调色板
+$cinema-primary: mat.define-palette(mat.$indigo-palette); // 主色调（靛蓝，适配电影风格）
+$cinema-accent: mat.define-palette(mat.$pink-palette);   // 强调色（粉色）
+$cinema-warn: mat.define-palette(mat.$red-palette);      // 警告色（红色）
+
+// 构建深色主题
+$cinema-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $cinema-primary,
+    accent: $cinema-accent,
+    warn: $cinema-warn,
+  )
+));
+
+// 全局应用深色主题
+@include mat.core();
+@include mat.all-component-themes($cinema-dark-theme);
+
+// 可选：定制全局样式（适配深色主题的背景/文字）
+body {
+  background-color: mat.get-color-from-palette($cinema-primary, 900); // 深靛蓝背景
+  color: mat.get-color-from-palette($cinema-primary, 50); // 浅文字色
+  margin: 0;
+  padding: 20px;
+}

@@ -1,0 +1,49 @@
+.page-container {
+  padding: 24px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.search-container {
+  margin-bottom: 24px;
+}
+
+.search-field {
+  width: 300px;
+}
+
+.movie-table {
+  width: 100%;
+}
+
+.movie-link {
+  color: white;
+  text-decoration: none;
+}
+
+.movie-link:hover {
+  text-decoration: underline;
+}
+
+.rating-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.rating-badge.high {
+  background-color: #4caf50;
+  color: white;
+}
+
+.rating-level {
+  margin-left: 8px;
+  font-size: 14px;
+  color: #666;
+}

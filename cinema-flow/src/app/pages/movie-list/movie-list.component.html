@@ -1,0 +1,78 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>电影列表</h1>
+    <a routerLink="/add" class="add-button">
+      添加电影
+    </a>
+  </div>
+
+  <!-- 搜索框 -->
+  <div class="search-container">
+    <input 
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      (keyup.enter)="onSearchChange(searchTerm)" 
+      placeholder="输入电影名称或导演"
+      class="search-input"
+    >
+  </div>
+
+  <!-- 三态展示：Loading / Error / Data -->
+  <ng-container *ngIf="filtered$ | async as movies; else loadingTpl">
+    <ng-container *ngIf="movies.length; else emptyTpl">
+      <table class="movie-table">
+        <thead>
+          <tr>
+            <th>电影名称</th>
+            <th>导演</th>
+            <th>评分</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let movie of movies">
+            <td>
+              <a [routerLink]="['/movies', movie.id]" class="movie-link">
+                {{ movie.title }}
+              </a>
+            </td>
+            <td>{{ movie.director }}</td>
+            <td>
+              <span class="rating-badge" [class.high]="movie.rating >= 8">
+                {{ movie.rating }}
+              </span>
+              <span class="rating-level">({{ movie.rating | ratingLevel }})</span>
+            </td>
+            <td>
+              <span class="status-badge" [class.watched]="movie.isWatched">
+                {{ movie.isWatched ? '已观影' : '未观影' }}
+              </span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <a [routerLink]="['/movies', movie.id]" class="action-button view" title="查看详情">
+                  查看
+                </a>
+                <button (click)="deleteMovie(movie.id)" class="action-button delete" title="删除">
+                  删除
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+    <ng-template #emptyTpl>
+      <div class="empty-state">
+        <p>暂无电影数据</p>
+      </div>
+    </ng-template>
+  </ng-container>
+  <ng-template #loadingTpl>
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>加载中...</p>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,168 @@
+.movie-list-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// 电影详情区域
+.movie-detail-section {
+  margin-bottom: 40px;
+}
+
+// 电影库区域
+.movies-section {
+  margin-top: 40px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 24px;
+  padding-left: 8px;
+}
+
+// 电影网格
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 24px;
+}
+
+// 电影卡片
+.movie-card {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-8px);
+
+    .poster-overlay {
+      opacity: 1;
+    }
+
+    .movie-poster {
+      transform: scale(1.05);
+    }
+  }
+
+  &.selected {
+    box-shadow: 0 0 0 3px #5c7cfa;
+  }
+}
+
+.poster-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 2/3;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.poster-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.play-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #5c7cfa 0%, #748ffc 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  padding-left: 4px;
+  box-shadow: 0 8px 24px rgba(92, 124, 250, 0.4);
+}
+
+.rating-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 212, 59, 0.95);
+  color: #1a1a2e;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  .star {
+    font-size: 12px;
+  }
+}
+
+// 电影信息
+.movie-info {
+  padding: 12px 8px;
+}
+
+.movie-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-meta {
+  font-size: 13px;
+  color: #8b92a8;
+  margin: 0 0 12px 0;
+}
+
+// 删除按钮样式
+.delete-btn {
+  width: 100%;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 4px 0 !important;
+  border-radius: 6px !important;
+  transition: all 0.2s !important;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+  }
+}
+
+// 响应式
+@media (max-width: 768px) {
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .delete-btn {
+    font-size: 12px !important;
+  }
+}

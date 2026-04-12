@@ -1,0 +1,29 @@
+<div class="stats-container">
+  <div *ngIf="movies$ | async as movies" class="stats-card">
+    <h3>影库统计</h3>
+    
+    <div class="stats-grid">
+      <!-- 总片量 -->
+      <div class="stat-item">
+        <span class="stat-label">影库总片量</span>
+        <span class="stat-value">{{ movies.length }}</span>
+      </div>
+      
+      <!-- 已观影 -->
+      <div class="stat-item">
+        <span class="stat-label">已观影</span>
+        <span class="stat-value">{{ getWatchedCount(movies) }}/{{ movies.length }}</span>
+        <div class="progress-container">
+          <div class="progress-bar" [style.width]="getWatchedPercentage(movies) + '%'"></div>
+        </div>
+        <span class="stat-info">{{ getWatchedPercentage(movies) | number: '1.0-0' }}% 完成</span>
+      </div>
+      
+      <!-- 平均评分 -->
+      <div class="stat-item">
+        <span class="stat-label">平均评分</span>
+        <span class="stat-value">{{ getAverageRating(movies) | number: '1.1-1' }}/10</span>
+      </div>
+    </div>
+  </div>
+</div>

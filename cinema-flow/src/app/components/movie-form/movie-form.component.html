@@ -1,0 +1,64 @@
+<div class="movie-form-container">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title class="form-title">添加新电影</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- 成功提示 -->
+      <div class="success-message" *ngIf="showSuccessMessage">
+        ✅ 电影添加成功！
+      </div>
+
+      <form (ngSubmit)="onSubmit()" class="movie-form">
+        <!-- 电影名称 -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>电影名称</mat-label>
+          <input matInput [(ngModel)]="newMovie.title" name="title" required placeholder="请输入电影名称">
+        </mat-form-field>
+
+        <!-- 导演 -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>导演</mat-label>
+          <input matInput [(ngModel)]="newMovie.director" name="director" required placeholder="请输入导演姓名">
+        </mat-form-field>
+
+        <!-- 上映日期 -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>上映日期</mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="newMovie.releaseDate" name="releaseDate" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- 评分 -->
+        <div class="form-field rating-field">
+          <label class="rating-label">评分: {{ newMovie.rating }}</label>
+          <mat-slider min="0" max="10" step="0.1" discrete class="rating-slider">
+            <input matSliderThumb [(ngModel)]="newMovie.rating" name="rating">
+          </mat-slider>
+        </div>
+
+        <!-- 是否已观影 -->
+        <div class="form-field checkbox-field">
+          <mat-checkbox [(ngModel)]="newMovie.isWatched" name="isWatched" color="primary">
+            已观影
+          </mat-checkbox>
+        </div>
+
+        <!-- 海报URL -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>海报URL</mat-label>
+          <input matInput [(ngModel)]="newMovie.posterUrl" name="posterUrl" placeholder="请输入海报图片链接">
+        </mat-form-field>
+
+        <!-- 提交按钮 -->
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" class="submit-btn">
+            提交
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,133 @@
+.movie-form-container {
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+
+.form-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-title {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.success-message {
+  background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.movie-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-field {
+  width: 100%;
+}
+
+/* 评分滑块样式 */
+.rating-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rating-label {
+  color: #8b92a8;
+  font-size: 14px;
+}
+
+.rating-slider {
+  width: 100%;
+}
+
+/* 复选框样式 */
+.checkbox-field {
+  padding: 8px 0;
+}
+
+/* 提交按钮样式 */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #5c7cfa 0%, #748ffc 100%) !important;
+  color: white !important;
+  padding: 8px 32px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  transition: all 0.2s !important;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(92, 124, 250, 0.4);
+  }
+}
+
+/* Material 表单字段深色主题适配 */
+::ng-deep {
+  .mat-mdc-form-field {
+    .mat-mdc-text-field-wrapper {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .mat-mdc-form-field-label {
+      color: #8b92a8;
+    }
+
+    .mat-mdc-input-element {
+      color: #ffffff;
+    }
+
+    .mdc-text-field--outlined {
+      --mdc-outlined-text-field-container-shape: 8px;
+    }
+  }
+
+  .mat-mdc-checkbox {
+    .mdc-checkbox__background {
+      border-color: #5c7cfa;
+    }
+
+    .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background {
+      background-color: #5c7cfa;
+      border-color: #5c7cfa;
+    }
+
+    .mdc-label {
+      color: #ffffff;
+    }
+  }
+
+  .mat-mdc-slider {
+    --mdc-slider-active-track-color: #5c7cfa;
+    --mdc-slider-handle-color: #5c7cfa;
+    --mdc-slider-focus-handle-color: #748ffc;
+  }
+}

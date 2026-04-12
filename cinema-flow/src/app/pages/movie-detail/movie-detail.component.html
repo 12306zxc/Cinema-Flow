@@ -1,0 +1,70 @@
+<div class="page-container">
+  <!-- 返回按钮 -->
+  <button mat-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+    返回
+  </button>
+  
+  <div *ngIf="movie; else notFound">
+    <mat-card class="movie-detail-card">
+      <div class="movie-header">
+        <img [src]="movie.posterUrl || 'assets/default-poster.jpg'" [alt]="movie.title" class="movie-poster">
+        <div class="movie-info">
+          <h1>{{ movie.title }}</h1>
+          <p class="director">
+            <mat-icon>person</mat-icon>
+            导演：{{ movie.director }}
+          </p>
+          <p class="release-date">
+            <mat-icon>calendar_today</mat-icon>
+            上映日期：{{ movie.releaseDate | date:'yyyy年MM月dd日' }}
+          </p>
+          <div class="rating-section">
+            <span class="rating-score">{{ movie.rating }}</span>
+            <span class="rating-level">{{ movie.rating | ratingLevel }}</span>
+            <mat-chip-option [selected]="movie.isWatched" color="primary" (change)="onWatchedChange($event)">
+              {{ movie.isWatched ? '已观影' : '未观影' }}
+            </mat-chip-option>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <mat-card-actions align="end">
+        <a mat-raised-button color="primary" routerLink="/movies">
+          <mat-icon>edit</mat-icon>
+          编辑
+        </a>
+        <button mat-raised-button color="warn" (click)="deleteMovie()">
+          <mat-icon>delete</mat-icon>
+          删除
+        </button>
+      </mat-card-actions>
+    </mat-card>
+    
+    <!-- 上一部/下一部导航 -->
+    <div class="navigation-buttons">
+      <button mat-button *ngIf="prevMovieId" [routerLink]="['/movies', prevMovieId]">
+        <mat-icon>chevron_left</mat-icon>
+        上一部
+      </button>
+      <span class="spacer"></span>
+      <button mat-button *ngIf="nextMovieId" [routerLink]="['/movies', nextMovieId]">
+        下一部
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+  
+  <ng-template #notFound>
+    <mat-card class="not-found">
+      <mat-card-content>
+        <mat-icon color="warn">error_outline</mat-icon>
+        <h2>电影未找到</h2>
+        <p>该电影可能已被删除或ID不正确</p>
+        <a mat-raised-button color="primary" routerLink="/movies">
+          返回电影列表
+        </a>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</div>
