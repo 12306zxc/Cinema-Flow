@@ -22,8 +22,23 @@ $cinema-dark-theme: mat.define-dark-theme((
 
 // 可选：定制全局样式（适配深色主题的背景/文字）
 body {
-  background-color: mat.get-color-from-palette($cinema-primary, 900); // 深靛蓝背景
-  color: mat.get-color-from-palette($cinema-primary, 50); // 浅文字色
+  background-color: #1a1a2e; // 深靛蓝背景
+  color: white; // 白色文字
   margin: 0;
   padding: 20px;
+}
+
+// 确保所有按钮的文字颜色都是白色
+.btn {
+  color: white !important;
+}
+
+// 确保所有链接的文字颜色都是白色
+a {
+  color: white !important;
+}
+
+// 确保所有表单元素的文字颜色都是白色
+input, textarea, select {
+  color: white !important;
 }

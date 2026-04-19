@@ -18,6 +18,14 @@ export interface Movie {
    * 导演
    */
   director: string;
+  /**
+   * 导演ID
+   */
+  directorId: number;
+  /**
+   * 电影类型
+   */
+  genre: string;
 
   /**
    * 评分 (0-10)
@@ -46,7 +54,7 @@ export interface Movie {
   /**
    * 状态
    */
-  status: 'showing' | 'coming' | 'ended';
+  status: 'showing' | 'coming' | 'ended' | 'archived';
 
   /**
    * 时长（分钟）
@@ -57,4 +65,8 @@ export interface Movie {
    * 类型/标签
    */
   tags?: string[];
+  /**
+   * 上映年份
+   */
+  releaseYear: number;
 }

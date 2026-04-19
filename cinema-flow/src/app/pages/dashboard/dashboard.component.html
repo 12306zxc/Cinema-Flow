@@ -36,19 +36,37 @@
       <h2>最近添加的电影</h2>
       <div class="recent-movies">
         <div *ngFor="let movie of movies" class="movie-card">
-          <div class="movie-card-header">
+          <div class="movie-poster">
+            <img [src]="movie.posterUrl || 'assets/default-poster.jpg'" [alt]="movie.title">
+            <div class="rating-badge">{{ movie.rating }}</div>
+          </div>
+          <div class="movie-info">
             <h3>{{ movie.title }}</h3>
+            <p>导演: {{ movie.director }}</p>
+            <p>状态: {{ movie.isWatched ? '已观影' : '未观影' }}</p>
             <button (click)="deleteMovie(movie.id)" class="delete-btn">
               删除
             </button>
           </div>
-          <div class="movie-card-content">
-            <p>评分: {{ movie.rating }} / 10</p>
-            <p>导演: {{ movie.director }}</p>
-            <p>状态: {{ movie.isWatched ? '已观影' : '未观影' }}</p>
-          </div>
         </div>
       </div>
+
+      <!-- 人气导演网格 -->
+      <mat-card *ngIf="topDirectors$ | async as directors">
+        <mat-card-header>
+          <mat-card-title>人气导演</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="director-grid">
+            <a *ngFor="let d of directors"
+              [routerLink]="['/directors', d.id]"
+              class="director-tile">
+              <h4>{{ d.name }}</h4>
+              <small>{{ d.nationality }}</small>
+            </a>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </ng-container>
 
     <!-- 状态2：空数据模板 -->

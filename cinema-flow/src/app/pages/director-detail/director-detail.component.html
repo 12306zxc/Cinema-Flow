@@ -1,0 +1,48 @@
+<div class="detail-container" *ngIf="director$ | async as director; else loading">
+    <button mat-stroked-button (click)="location.back()">
+        <mat-icon>arrow_back</mat-icon>返回
+    </button>
+    <mat-card class="director-info">
+        <h1>{{ director.name }}</h1>
+        <p>
+            国籍：
+            {{ director.nationality }}</p>
+        <p>
+            出生年份：
+            {{ director.birthYear }}</p>
+        <p class="bio">{{ director.bio }}</p>
+    </mat-card>
+    <!-- 该导演执导的电影列表-->
+    <mat-card class="directed-movies" *ngIf="directedMovies$ | async as movies">
+        <mat-card-header>
+            <mat-card-title>
+                执导作品（
+                {{ movies.length }}
+                部）</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngFor="let movie of movies" class="movie-row">
+                <a [routerLink]="['/movies', movie.id]">{{ movie.title }}</a>
+                <span class="rating">{{ movie.rating }}
+                    分</span>
+                <span class="genre-badge">{{ movie.genre }}</span>
+            </div>
+            <p *ngIf="movies.length === 0">
+                暂无执导作品</p>
+        </mat-card-content>
+    </mat-card>
+    
+    <!-- 上一位/下一位导航按钮 -->
+    <div class="nav-buttons" *ngIf="navigation$ | async as nav">
+      <a mat-stroked-button *ngIf="nav.prev" [routerLink]="['/directors', nav.prev.id]">
+        <mat-icon>arrow_back</mat-icon> {{ nav.prev.name }}
+      </a>
+      <span class="spacer"></span>
+      <a mat-stroked-button *ngIf="nav.next" [routerLink]="['/directors', nav.next.id]">
+        {{ nav.next.name }} <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </div>
+</div>
+<ng-template #loading>
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</ng-template>

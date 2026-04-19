@@ -1,22 +1,26 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { MatCardModule } from '@angular/material/card';
+import { Observable, map, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie';
-
+import { DirectorService } from '../../services/director.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink
+    RouterLink,
+    MatCardModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
+  private directorService = inject(DirectorService);
 
   // 响应式统计数据（模板用 async 管道自动订阅）
   readonly stats$ = this.movieService.getMovies().pipe(
@@ -29,8 +33,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // 响应式最近电影数据（模板用 async 管道自动订阅）
   readonly recent$ = this.movieService.getMovies().pipe(
-    map(list => [...list].sort((a, b) => b.id - a.id).slice(0, 5))
+    map(list => [...list].sort((a, b) => b.id - a.id).slice(0, 6))
   );
+
+  // 新增：人气导演
+  readonly topDirectors$ = of([
+    { id: 1, name: '克里斯托弗·诺兰', nationality: '英国/美国' },
+    { id: 2, name: '李安', nationality: '中国台湾/美国' },
+    { id: 3, name: '宫崎骏', nationality: '日本' },
+    { id: 4, name: '王家卫', nationality: '中国香港' }
+  ]).pipe(
+    delay(200),
+    map((list: any[]) => list.slice(0, 4))
+  );
+
+
 
   // 保留你原有的删除功能
   deleteMovie(id: number): void {

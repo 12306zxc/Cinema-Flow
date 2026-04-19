@@ -15,6 +15,10 @@
       <mat-icon>theaters</mat-icon>
       电影列表
     </a>
+    <a mat-button routerLink="/directors" routerLinkActive="active-link">
+      <mat-icon>person</mat-icon>
+      导演库
+    </a>
     <a mat-button routerLink="/add" routerLinkActive="active-link">
       <mat-icon>add_circle</mat-icon>
       添加电影
@@ -24,6 +28,15 @@
       关于
     </a>
   </nav>
+  
+  <div class="auth-buttons">
+    <button mat-button *ngIf="!authService.isLoggedIn" (click)="showLogin()">
+      <mat-icon>login</mat-icon> 登录
+    </button>
+    <button mat-button *ngIf="authService.isLoggedIn" (click)="authService.logout()">
+      <mat-icon>logout</mat-icon> 登出
+    </button>
+  </div>
 </mat-toolbar>
 
 <!-- 面包屑导航 -->

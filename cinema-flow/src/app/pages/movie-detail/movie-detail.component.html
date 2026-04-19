@@ -4,7 +4,7 @@
     <mat-icon>arrow_back</mat-icon>
     返回
   </button>
-  
+
   <div *ngIf="movie; else notFound">
     <mat-card class="movie-detail-card">
       <div class="movie-header">
@@ -13,11 +13,15 @@
           <h1>{{ movie.title }}</h1>
           <p class="director">
             <mat-icon>person</mat-icon>
-            导演：{{ movie.director }}
+            导演：<a [routerLink]="['/directors', movie.directorId]" class="director-link">{{ movie.director }} →</a>
           </p>
           <p class="release-date">
             <mat-icon>calendar_today</mat-icon>
             上映日期：{{ movie.releaseDate | date:'yyyy年MM月dd日' }}
+          </p>
+          <p class="genre">
+            <mat-icon>category</mat-icon>
+            类型：<a [routerLink]="['/movies/genre', movie.genre]" class="genre-link">{{ movie.genre }}</a>
           </p>
           <div class="rating-section">
             <span class="rating-score">{{ movie.rating }}</span>
@@ -40,7 +44,7 @@
         </button>
       </mat-card-actions>
     </mat-card>
-    
+
     <!-- 上一部/下一部导航 -->
     <div class="navigation-buttons">
       <button mat-button *ngIf="prevMovieId" [routerLink]="['/movies', prevMovieId]">
@@ -54,7 +58,7 @@
       </button>
     </div>
   </div>
-  
+
   <ng-template #notFound>
     <mat-card class="not-found">
       <mat-card-content>

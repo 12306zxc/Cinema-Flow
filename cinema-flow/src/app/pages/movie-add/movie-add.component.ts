@@ -53,8 +53,11 @@ export class MovieAddComponent {
     const newMovie: Omit<Movie, 'id'> = {
       title: this.movieForm.title,
       director: this.movieForm.director,
+      directorId: 1, // 默认导演ID
+      genre: '未分类', // 默认类型
       rating: this.movieForm.rating,
       releaseDate: this.movieForm.releaseDate,
+      releaseYear: this.movieForm.releaseDate.getFullYear(),
       isWatched: this.movieForm.isWatched,
       posterUrl: this.movieForm.posterUrl,
       description: this.movieForm.description,

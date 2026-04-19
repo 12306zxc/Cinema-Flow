@@ -1,33 +1,27 @@
-<div class="page-container">
-  <h1>关于 CinemaFlow</h1>
-  <mat-card>
-    <mat-card-header>
-      <mat-icon mat-card-avatar>movie</mat-icon>
-      <mat-card-title>CinemaFlow 电影管理系统</mat-card-title>
-      <mat-card-subtitle>v1.0.0</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>CinemaFlow 是一个基于 Angular 开发的单页面应用，用于管理个人观影记录。</p>
-      
-      <h3>技术栈</h3>
-      <mat-list>
-        <mat-list-item>
-          <mat-icon matListItemIcon>check_circle</mat-icon>
-          Angular 17+ (Standalone Components)
-        </mat-list-item>
-        <mat-list-item>
-          <mat-icon matListItemIcon>check_circle</mat-icon>
-          Angular Material UI
-        </mat-list-item>
-        <mat-list-item>
-          <mat-icon matListItemIcon>check_circle</mat-icon>
-          TypeScript
-        </mat-list-item>
-        <mat-list-item>
-          <mat-icon matListItemIcon>check_circle</mat-icon>
-          Angular Router
-        </mat-list-item>
-      </mat-list>
-    </mat-card-content>
-  </mat-card>
-</div>
+<mat-card>
+  <h1>CinemaFlow</h1>
+
+  <h3>路由拓扑</h3>
+  <pre class="route-map">
+/                  → 重定向到 /dashboard
+/dashboard         → DashboardComponent（仪表盘）
+/movies            → MovieListComponent（全部电影）
+/movies/genre/:genre → MovieListComponent（分类筛选）
+/movies/:id        → MovieDetailComponent（电影详情）
+/directors         → DirectorListComponent（导演列表）
+/directors/:id     → DirectorDetailComponent（导演详情）
+/add               → MovieAddComponent（添加电影）
+/about             → AboutComponent（关于）
+/**                → 重定向到 /dashboard（404 兜底）
+  </pre>
+
+  <h3>已注册服务</h3>
+  <ul>
+    <li><strong>MovieService</strong> — 电影数据 Observable 接口</li>
+    <li><strong>DirectorService</strong> — 导演数据 Observable 接口</li>
+    <li><strong>MessageService</strong> — 业务消息日志</li>
+    <li><strong>MovieStateService</strong> — BehaviorSubject 状态中心</li>
+  </ul>
+
+  <p *ngIf="latestMessage">最近一条服务消息：{{ latestMessage }}</p>
+</mat-card>
