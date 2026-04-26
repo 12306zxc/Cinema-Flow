@@ -8,15 +8,19 @@
 
   <!-- 搜索框 -->
   <div class="search-container">
-    <input 
-      type="text" 
-      [(ngModel)]="searchTerm" 
-      (keyup.enter)="onSearchChange(searchTerm)" 
-      placeholder="输入电影名称或导演"
-      class="search-input"
-    >
+    <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="onSearchChange(searchTerm)" placeholder="输入电影名称或导演"
+      class="search-input">
   </div>
-
+  <!-- 
+分类标签栏
+ -->
+  <div class="genre-tags" *ngIf="genres$ | async as genres">
+    <a mat-button routerLink="/movies" [class.active]="!currentGenre">
+      全部</a>
+    <a mat-button *ngFor="let g of genres" [routerLink]="['/movies/genre', g]" [class.active]="currentGenre === g">{{ g
+      }}</a>
+  </div>
+  
   <!-- 三态展示：Loading / Error / Data -->
   <ng-container *ngIf="filtered$ | async as movies; else loadingTpl">
     <ng-container *ngIf="movies.length; else emptyTpl">

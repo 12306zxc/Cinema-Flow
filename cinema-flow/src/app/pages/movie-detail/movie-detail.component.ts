@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -27,14 +27,16 @@ import { RatingLevelPipe } from '../../pipes/rating-level.pipe';
   styleUrl: './movie-detail.component.scss'
 })
 export class MovieDetailComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private movieService = inject(MovieService);
-  private location = inject(Location);
-  
   movie?: Movie;
   prevMovieId?: number;
   nextMovieId?: number;
+  
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private movieService: MovieService,
+    private location: Location
+  ) {}
   
   ngOnInit(): void {
     // 从路由参数中获取电影ID

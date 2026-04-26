@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -25,8 +25,11 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AppComponent {
   title = 'cinema-flow';
-  authService: any = inject(AuthService);
-  private dialog = inject(MatDialog);
+  
+  constructor(
+    public authService: AuthService,
+    private dialog: MatDialog
+  ) {}
   
   showLogin(): void {
     const username = prompt('请输入用户名:');

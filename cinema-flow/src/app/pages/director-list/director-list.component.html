@@ -1,10 +1,23 @@
 <div class="page-container">
     <h1>导演库</h1>
-    <div class="director-grid" *ngIf="directors$ | async as directors">
-        <a *ngFor="let d of directors" [routerLink]="['/directors', d.id]" class="director-card">
-            <h3>{{ d.name }}</h3>
-            <p class="nationality">{{ d.nationality }}</p>
-            <p class="birth">{{ d.birthYear }} 年生</p>
-        </a>
-    </div>
+    <ng-container *ngIf="directors$ | async as directors; else loadingTpl">
+        <div class="director-grid">
+            <a *ngFor="let d of directors" [routerLink]="['/directors', d.id]" class="director-card">
+                <h3>{{ d.name }}</h3>
+                <p class="nationality">{{ d.nationality }}</p>
+                <p class="birth">{{ d.birthYear }} 年生</p>
+            </a>
+        </div>
+        <ng-template #emptyTpl>
+            <div class="empty-state">
+                <p>暂无导演数据</p>
+            </div>
+        </ng-template>
+    </ng-container>
+    <ng-template #loadingTpl>
+        <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>加载中...</p>
+        </div>
+    </ng-template>
 </div>

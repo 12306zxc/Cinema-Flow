@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -7,20 +7,25 @@ import { delay } from 'rxjs/operators';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie';
 import { DirectorService } from '../../services/director.service';
+import { MovieSearchComponent } from '../../components/movie-search/movie-search.component';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     CommonModule,
     RouterLink,
-    MatCardModule
+    MatCardModule,
+    MovieSearchComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  private movieService = inject(MovieService);
-  private directorService = inject(DirectorService);
+  constructor(
+    private movieService: MovieService,
+    private directorService: DirectorService
+  ) {}
+
 
   // 响应式统计数据（模板用 async 管道自动订阅）
   readonly stats$ = this.movieService.getMovies().pipe(

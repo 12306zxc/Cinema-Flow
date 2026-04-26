@@ -1,8 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Observable, combineLatest, map } from 'rxjs';
+import { Observable, combineLatest, map, switchMap } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie';
 import { RatingLevelPipe } from '../../pipes/rating-level.pipe';
@@ -14,36 +14,47 @@ import { RatingLevelPipe } from '../../pipes/rating-level.pipe';
   styleUrl: './movie-list.component.scss'
 })
 export class MovieListComponent implements OnInit {
-  private movieService = inject(MovieService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   searchTerm = '';
+  currentGenre = '';
   filtered$!: Observable<Movie[]>;
 
+  constructor(
+    private movieService: MovieService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
-    this.filtered$ = combineLatest([
-      this.movieService.getMovies(),
-      this.route.queryParamMap
-    ]).pipe(
-      map(([movies, params]) => {
-        const term = (params.get('search') || '').toLowerCase();
-        this.searchTerm = term;
-        if (!term) return movies;
-        return movies.filter(m =>
-          m.title.toLowerCase().includes(term) ||
-          m.director.toLowerCase().includes(term)
-        );
+    this.filtered$ = this.route.paramMap.pipe(
+      switchMap(params => {
+        this.currentGenre = params.get('genre') || '';
+        if (this.currentGenre) {
+          return this.movieService.getMoviesByGenre(this.currentGenre);
+        } else {
+          return this.movieService.getMovies();
+        }
       })
     );
   }
-  onSearchChange(value: string): void {
+  genres$ = this.movieService.getMovies().pipe(
+    map(movies => [...new Set(movies.map(m => m.genre))])
+  );
+
+  /**
+   * 搜索电影
+   */
+  onSearchChange(searchTerm: string): void {
     this.router.navigate(['/movies'], {
-      queryParams: value ? { search: value } : {}
+      queryParams: { search: searchTerm }
     });
   }
+
+  /**
+   * 删除电影
+   */
   deleteMovie(id: number): void {
-    if (!confirm('确定要删除这部电影吗？')) return;
-    this.movieService.deleteMovie(id).subscribe();
+    if (confirm('确定要删除这部电影吗？')) {
+      this.movieService.deleteMovie(id).subscribe();
+    }
   }
 }
-
